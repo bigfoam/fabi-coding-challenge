@@ -32,19 +32,6 @@ const Chat: React.FC<ChatProps> = ({ sender, responder }) => {
   const [messageHistory, setMessageHistory] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
 
-  const downloadCsvFile = (url: string) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "data.csv";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleDownload = (url: string) => {
-    downloadCsvFile(url);
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
@@ -96,7 +83,7 @@ const Chat: React.FC<ChatProps> = ({ sender, responder }) => {
   };
 
   return (
-    <div className="chat-container">
+    <>
       <ChatBox>
         {messageHistory.map((message) => (
           <MessageBox
@@ -119,22 +106,21 @@ const Chat: React.FC<ChatProps> = ({ sender, responder }) => {
                     Download CSV
                   </a>
                 </MessageSection>
-                <MessageSection>Status: {message.status}</MessageSection>
               </>
             )}
           </MessageBox>
         ))}
       </ChatBox>
-      <div className="chat-input">
+      <div>
         <input
           type="text"
           value={inputText}
           onChange={handleInputChange}
-          placeholder="Type your message..."
+          placeholder="Type your prompt..."
         />
         <button onClick={handleSendMessage}>Send</button>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -150,7 +136,7 @@ const App = () => {
         </BannerText>
       </Banner>
       <Page>
-        <Chat sender="client" responder="fabi"></Chat>
+        <Chat sender="client" responder="fabi" />
       </Page>
     </AppWrapper>
   );
